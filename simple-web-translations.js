@@ -7,8 +7,12 @@
  * @param languageCode The code of the language to use (e.g. de_DE or en_GB)
  */
 function setLanguage(languageCode) {
+    localStorage.setItem("simpleWebTranslations.selectedLanguage", languageCode);
     const translationDictionary = _getTranslationDictionary(languageCode);
-    _replaceTranslationValues(translationDictionary);
+    if (translationDictionary)
+        _replaceTranslationValues(translationDictionary);
+    else
+        localStorage.removeItem("simpleWebTranslations.selectedLanguage")
 }
 
 /**
@@ -20,9 +24,10 @@ function parsePageToDictionary() {
     const elements = document.querySelectorAll(".translation[data-translationkey]");
     elements.forEach(element => {
         const translationKey = element.dataset.translationkey;
-        if (translations.hasOwnProperty(translationKey))
-            throw new Error("Found duplicated translation key: " + translationKey);
-        translations[translationKey] = element.innerHTML;
+        const translationValue = element.innerHTML;
+        if (translations.hasOwnProperty(translationKey) && translations[translationKey] !== translationValue)
+            console.error("Found duplicated translation key with varying default value: " + translationKey);
+        translations[translationKey] = translationValue;
     });
     console.log("Translations detected on current page:");
     console.log("translationDictionaries[] =", JSON.stringify(translations) + ";")
@@ -31,10 +36,17 @@ function parsePageToDictionary() {
 // -------------------------------------- //
 // ---------- HELPER FUNCTIONS ---------- //
 // -------------------------------------- //
+_init();
+
+function _init() {
+    const languageCode = localStorage.getItem("simpleWebTranslations.selectedLanguage");
+    if (languageCode)
+        setLanguage(languageCode);
+}
 
 function _getTranslationDictionary(languageCode) {
     if (!translationDictionaries.hasOwnProperty(languageCode))
-        throw new Error("Unsupported language code", languageCode);
+        console.error("Unsupported language code", languageCode);
     return translationDictionaries[languageCode];
 }
 
