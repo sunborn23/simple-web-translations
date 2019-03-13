@@ -8,14 +8,14 @@ Generally intended for smaller web pages with low amount of supported languages 
 ## Usage Instructions
 
 #### 1. Add include
-Include simple-translation-dictionaries.js and simple-web-simple-translation-dictionaries.js into your page:
+Include the files from the ``dist`` folder in your HTML code:
 ```html
 <script type="text/javascript" src="simple-translation-dictionaries.js"></script>
 <script type="text/javascript" src="simple-web-simple-translation-dictionaries.js"></script>
 ```
 
 #### 2. Tag elements to translate
-To all HTML elements containing text to translate...
+For all HTML elements containing text to translate...
 - add ``translation`` to the list of css classes
 - add the html attribute ``data-translationkey`` and set its value to a globally unique string identifying the text to translate.
 
