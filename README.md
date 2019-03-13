@@ -2,7 +2,7 @@
 
 Super simple, dependency-free JS framework for translating web pages.
 
-Features include default text values for browsers without javascript support and easy setup and configuration, also for existing websites.
+Features include default text values for browsers without javascript support, persistence of the selected language across user sessions and easy setup & configuration, also for existing websites.
 Generally intended for smaller web pages with low amount of supported languages (not performance-optimized).
 
 ## Usage Instructions
